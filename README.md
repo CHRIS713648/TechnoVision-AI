@@ -1,4 +1,6 @@
 # TechnoVision-AI
+<img width="1518" height="785" alt="image" src="https://github.com/user-attachments/assets/e1a728c3-ff29-42b4-a8d9-94b46db90829" />
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 🔷 Welcome to TechnoVision AI
 Innovating Tomorrow – Powered by Intelligence
