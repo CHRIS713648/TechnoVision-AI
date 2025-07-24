@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Λύσεις για Επιχειρήσεις | TechnoVision AI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00ccff;
+            --accent-color: #ff6b35;
+            --dark-color: #1a1a2e;
+            --light-color: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        .navbar {
+            backdrop-filter: blur(20px);
+            background: rgba(26, 26, 46, 0.95) !important;
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: var(--gradient-3);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--dark-color);
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-1);
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,204,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #fff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-hero {
+            background: var(--gradient-3);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,204,255,0.3);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,204,255,0.4);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        /* Services Section */
+        .services-intro {
+            padding: 100px 0;
+            background: var(--light-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            text-align: center;
+            color: #64748b;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .service-card {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            padding: 2.5rem;
+            height: 100%;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-3);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 3.5rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .service-card h4 {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Detailed Services */
+        .detailed-services {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .service-item {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .service-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            border-left-color: var(--primary-color);
+        }
+
+        .service-item h3 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-item h5 {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .service-item strong {
+            color: var(--accent-color);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            background: var(--dark-color);
+            color: white;
+            position: relative;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-2);
+            opacity: 0.9;
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Stats Counter */
+        .stats-section {
+            background: var(--primary-color);
+            color: white;
+            padding: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0a0a0a;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .service-card {
+                margin-bottom: 2rem;
+            }
+            
+            .service-item {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">TechnoVision AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Αρχική</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Υπηρεσίες</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#solutions">Λύσεις</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Επικοινωνία</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero-section">
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            <div class="container hero-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="hero-title">Μεταμορφώστε το Μέλλον σας με AI</h1>
+                        <p class="hero-subtitle">Παρέχουμε εξειδικευμένες λύσεις Τεχνητής Νοημοσύνης που αυτοματοποιούν διαδικασίες, αυξάνουν τις πωλήσεις και παρέχουν κρίσιμα δεδομένα για στρατηγικές αποφάσεις.</p>
+                        <button class="btn btn-primary btn-hero" onclick="scrollToSection('contact')">
+                            Ξεκινήστε Τώρα <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hero-visual d-none d-lg-block">
+                            <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 2rem; backdrop-filter: blur(20px);">
+                                <i class="bi bi-robot" style="font-size: 8rem; color: var(--secondary-color);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="500">0</span>
+                            <span class="stat-label">Ικανοποιημένοι Πελάτες</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="50">0</span>
+                            <span class="stat-label">AI Λύσεις</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="99">0</span>
+                            <span class="stat-label">% Επιτυχία</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="24">0</span>
+                            <span class="stat-label">7 Υποστήριξη</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services-intro">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Λύσεις Αιχμής για Κάθε Επιχειρησιακή Ανάγκη</h2>
+                <p class="section-subtitle animate-on-scroll">Αξιοποιούμε τη δύναμη της Τεχνητής Νοημοσύνης για να προσφέρουμε μετρήσιμα αποτελέσματα. Από την αυτοματοποίηση της επικοινωνίας μέχρι την πρόβλεψη των μελλοντικών τάσεων.</p>
+                
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card animate-on-scroll">
+                            <i class="bi bi-robot service-icon"></i>
+                            <h4>Αυτοματοποίηση & Εξυπηρέτηση</h4>
+                            <p>Εικονικοί βοηθοί που λειτουργούν 24/7, έτοιμοι να εξυπηρετήσουν τους πελάτες σας και να αυξήσουν τις πωλήσεις.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card animate-on-scroll">
+                            <i class="bi bi-bar-chart-line-fill service-icon"></i>
+                            <h4>Business Intelligence</h4>
+                            <p>Μετατρέψτε τα δεδομένα σας από απλούς αριθμούς σε ένα ισχυρό ανταγωνιστικό πλεονέκτημα.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card animate-on-scroll">
+                             <i class="bi bi-shield-lock-fill service-icon"></i>
+                            <h4>Ασφάλεια & Προστασία</h4>
+                            <p>Θωρακίστε την επιχείρησή σας με ευφυή συστήματα ανίχνευσης απάτης και κυβερνοαπειλών.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="detailed-services">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Ολοκληρωμένες Λύσεις Τεχνητής Νοημοσύνης</h2>
+                
+                <div class="service-item animate-on-scroll">
+                    <h3>1. AI Chatbot / Εικονικός Βοηθός</h3>
+                    <h5>Αυτοματοποιημένη Επικοινωνία που Ενισχύει τις Πωλήσεις</h5>
+                    <p>Αναβαθμίστε την εμπειρία του πελάτη και αυτοματοποιήστε την εξυπηρέτηση με έξυπνους εικονικούς βοηθούς. Οι AI Chatbots μας διαχειρίζονται ερωτήματα, κλείνουν ραντεβού, καθοδηγούν τους χρήστες σε αγορές και συλλέγουν πολύτιμα δεδομένα, 24 ώρες το 24ωρο.</p>
+                    <p><strong>Ιδανικό για:</strong> E-shops, ξενοδοχεία, εταιρείες παροχής υπηρεσιών, υποστήριξη πελατών.</p>
+                </div>
+
+                <div class="service-item animate-on-scroll">
+                    <h3>2. AI Εξατομίκευση Περιεχομένου</h3>
+                    <h5>Μοναδικές Εμπειρίες για Κάθε Επισκέπτη</h5>
+                    <p>Μετατρέψτε την ιστοσελίδα σας σε ένα δυναμικό περιβάλλον που προσαρμόζεται σε πραγματικό χρόνο στις προτιμήσεις κάθε χρήστη. Οι αλγόριθμοί μας αναλύουν τη συμπεριφορά και προτείνουν τα κατάλληλα προϊόντα, άρθρα και υπηρεσίες.</p>
+                    <p><strong>Ιδανικό για:</strong> Media sites, πλατφόρμες e-learning, e-commerce.</p>
+                </div>
+
+                <div class="service-item animate-on-scroll">
+                    <h3>3. Υπηρεσίες AI Ανάλυσης Δεδομένων</h3>
+                    <h5>Μετατρέψτε τα Δεδομένα σε Στρατηγική</h5>
+                    <p>Αποκωδικοποιήστε την πολυπλοκότητα των δεδομένων σας. Οι υπηρεσίες μας παρέχουν βαθιά ανάλυση της αγοράς και των πελατών σας, αποκαλύπτοντας κρυμμένες τάσεις και επιχειρηματικές ευκαιρίες.</p>
+                    <p><strong>Ιδανικό για:</strong> Εταιρείες που στοχεύουν σε data-driven ανάπτυξη, τμήματα marketing και πωλήσεων.</p>
+                </div>
+                
+                <div class="service-item animate-on-scroll">
+                    <h3>4. Εργαλεία AI για SEO και Περιεχόμενο</h3>
+                    <h5>Ποιοτικό Περιεχόμενο, Βελτιστοποιημένο για Απόδοση</h5>
+                    <p>Επιταχύνετε τη δημιουργία περιεχομένου χωρίς συμβιβασμούς στην ποιότητα. Τα AI εργαλεία μας παράγουν μοναδικά άρθρα, ελκυστικές περιγραφές προϊόντων και βελτιστοποιημένα meta-tags.</p>
+                    <p><strong>Ιδανικό για:</strong> Digital marketing agencies, e-shops, content creators.</p>
+                </div>
+
+                <div class="service-item animate-on-scroll">
+                    <h3>5. Επεξεργασία Εικόνας με AI</h3>
+                    <h5>Επαγγελματικά Οπτικά Αποτελέσματα, Αυτόματα</h5>
+                    <p>Αναβαθμίστε την οπτική ταυτότητα της επιχείρησής σας. Η πλατφόρμα μας αυτοματοποιεί τη βελτίωση εικόνων, την αφαίρεση φόντου, την αλλαγή στυλ και την παραγωγή νέων, μοναδικών εικόνων.</p>
+                    <p><strong>Ιδανικό για:</strong> E-shops, διαφημιστικές εταιρείες, φωτογράφοι, social media managers.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container contact-content">
+                <h2 class="section-title text-white animate-on-scroll">Επικοινωνήστε Μαζί Μας</h2>
+                <p class="section-subtitle text-white animate-on-scroll">Είστε έτοιμοι να ενσωματώσετε την Τεχνητή Νοημοσύνη στην επιχείρησή σας; Επικοινωνήστε μαζί μας για μια δωρεάν παρουσίαση.</p>
+                
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="contact-info animate-on-scroll">
+                            <div class="mb-4">
+                                <i class="bi bi-envelope-fill" style="font-size: 2rem; color: var(--secondary-color);"></i>
+                                <p class="mt-2"><strong>Email:</strong> info@technovision-ai.com</p>
+                            </div>
+                            <div class="mb-4">
+                                <i class="bi bi-telephone-fill" style="font-size: 2rem; color: var(--secondary-color);"></i>
+                                <p class="mt-2"><strong>Τηλέφωνο:</strong> 210 123 4567</p>
+                            </div>
+                            <div class="mb-4">
+                                <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: var(--secondary-color);"></i>
+                                <p class="mt-2"><strong>Διεύθυνση:</strong> Αθήνα, Ελλάδα</p>
+                            </div>
+                            <button class="btn btn-hero" onclick="window.location.href='mailto:info@technovision-ai.com'">
+                                Στείλτε μας Email <i class="bi bi-send ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>TechnoVision AI</h4>
+                    <p>Πρωτοπόροι στις λύσεις Τεχνητής Νοημοσύνης για επιχειρήσεις. Μετασχηματίζουμε το μέλλον μαζί σας.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Υπηρεσίες</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#services" style="color: #ccc; text-decoration: none;">AI Chatbots</a></li>
+                        <li><a href="#services" style="color: #ccc; text-decoration: none;">Business Intelligence</a></li>
+                        <li><a href="#services" style="color: #ccc; text-decoration: none;">Ανάλυση Δεδομένων</a></li>
+                        <li><a href="#services" style="color: #ccc; text-decoration: none;">Κυβερνοασφάλεια</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Επικοινωνία</h4>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-envelope me-2"></i>info@technovision-ai.com</li>
+                        <li><i class="bi bi-telephone me-2"></i>210 123 4567</li>
+                        <li><i class="bi bi-geo-alt me-2"></i>Αθήνα, Ελλάδα</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Ακολουθήστε μας</h4>
+                    <div class="social-links">
+                        <a href="#" style="color: var(--secondary-color); font-size: 1.5rem; margin-right: 1rem;"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" style="color: var(--secondary-color); font-size: 1.5rem; margin-right: 1rem;"><i class="bi bi-twitter"></i></a>
+                        <a href="#" style="color: var(--secondary-color); font-size: 1.5rem; margin-right: 1rem;"><i class="bi bi-facebook"></i></a>
+                        <a href="#" style="color: var(--secondary-color); font-size: 1.5rem;"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechnoVision AI. Όλα τα δικαιώματα κατοχυρωμένα.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script>
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(26, 26, 46, 0.98)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            } else {
+                navbar.style.background = 'rgba(26, 26, 46, 0.95)';
+            }
+        });
+
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animated');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + (target === 99 ? '%' : target === 24 ? '/7' : '+');
+            }, 20);
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsSection = document.querySelector('.stats-section');
+        let statsAnimated = false;
+
+        const checkStatsVisibility = () => {
+            if (!statsAnimated && statsSection.getBoundingClientRect().top < window.innerHeight) {
+                const counters = document.querySelectorAll('.stat-number');
+                counters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    animateCounter(counter, target);
+                });
+                statsAnimated = true;
+            }
+        };
+
+        window.addEventListener('scroll', checkStatsVisibility);
+        window.addEventListener('load', checkStatsVisibility);
+
+        // Active navigation link
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop <= 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add click events to navigation links
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            });
+        });
+
+        // Loading effect for buttons
+        function addLoadingEffect(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '<span class="loading-spinner"></span> Φόρτωση...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }, 2000);
+        }
+
+        // Add loading effect to contact button
+        document.querySelector('.btn-hero').addEventListener('click', function() {
+            if (this.textContent.includes('Στείλτε')) {
+                addLoadingEffect(this);
+            }
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.floating-element');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Enhanced hover effects
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.background = 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.background = 'white';
+            });
+        });
+
+        // Intersection Observer for better performance
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animate elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile menu enhancement
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+
+        navbarToggler.addEventListener('click', function() {
+            setTimeout(() => {
+                if (navbarCollapse.classList.contains('show')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            }, 300);
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 992) {
+                    navbarCollapse.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
